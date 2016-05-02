@@ -21,5 +21,17 @@ angular.module('flightNodeApp')
     roles: 'http://localhost:50323/api/v1/roles/',
     birdspecies: 'http://localhost:50323/api/v1/birdspecies/',
     waterbirdForagingSurvey: 'http://localhost:50323/api/v1/waterbirdforagingsurvey/',
-    surveyTypes: 'http://localhost:50323/api/v1/surveytypes/'
+    surveyTypes: 'http://localhost:50323/api/v1/surveytypes/',
+    enums: {
+        weather: 'http://localhost:50323/api/v1/enums/weather',
+        waterHeights: 'http://localhost:50323/api/v1/enums/waterheights',
+        tides: 'http://localhost:50323/api/v1/enums/tides',
+        disturbanceTypes: 'http://localhost:50323/api/v1/enums/disturbancetypes',
+        habitatTypes: 'http://localhost:50323/api/v1/enums/habitattypes',
+        feedingSuccessRates: 'http://localhost:50323/api/v1/enums/feedingsuccessrates',
+        activityTypes: 'http://localhost:50323/api/v1/enums/activitytypes',
+        siteAssessments: 'http://localhost:50323/api/v1/enums/siteassessments',
+        vantagePoints: 'http://localhost:50323/api/v1/enums/vantagepoints',
+        accessPoints: 'http://localhost:50323/api/v1/enums/accesspoints'
+    }
   });

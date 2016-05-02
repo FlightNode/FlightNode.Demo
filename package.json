@@ -2,7 +2,9 @@
   "private": true,
   "name": "flightnode-app",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "left-pad": "^1.1.0"
+  },
   "repository": {},
   "devDependencies": {
     "grunt": "^0.4.5",

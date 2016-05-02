@@ -1,111 +1,121 @@
 <div class="container">
     <div ng-include="'/app/views/censusdata/progressBar.html'"></div>
-    {{censusForm.step = 1}}
+    <!-- TODO: shouldn't this be moved to the controller? -->
+    Step: {{censusForm.step = 1}}
     <!--{{censusForm.saveForLater}}-->
-    {{saveForLater}}
-
-    <form class="form-horizontal" ng-submit="submit()" role="form"> 
+    <!-- {{saveForLater}} -->
+    <form class="form-horizontal" ng-submit="submit()" role="form">
         <div class="form-group panel panel-primary">
             <div class="panel-heading">Site Information</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Site Type:</label>
-                        <div class="col-md-9">
-                            <div class="checkbox">
-                                <label ng-repeat="siteType in data.siteTypeInfo"><input type="radio" name="siteType" ng-model="censusForm.siteTypeId" value="{{siteType.Id}}"> {{ siteType.Description }} &nbsp;</label>        
-                            </div>
-                        </div>    
-                    </div>  
-                    <div class="form-group" ng-show="censusForm.siteTypeId === '2'">
-                        <label class="control-label col-md-3" for="location">Location:</label>
-                        <div class="col-md-9">
-                            <select name="location"  class="form-control" id="location" ng-model="censusForm.locationId">
-                                <option ng-repeat="loc in list" value="{{loc.id}}">{{loc.siteCode}} - {{loc.siteName}}<option>
-                            </select>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Site Type:</label>
+                    <div class="col-md-9">
+                        <div class="checkbox">
+                            <label ng-repeat="siteType in enums.siteAssessments">
+                                <input type="radio" name="siteType" ng-model="censusForm.siteTypeId" value="{{siteType.Id}}"> {{ siteType.description }} &nbsp;</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3" for="surveyDate">Survey Date:</label>
-                        <div class="col-md-4">
-                            <input type="date" class="form-control" id="surveyDate" placeholder="Enter Survey Date" ng-model="censusForm.surveyDate">
+                </div>
+                <div class="form-group" ng-show="censusForm.siteTypeId === '2'">
+                    <label class="control-label col-md-3" for="location">Location:</label>
+                    <div class="col-md-9">
+                        <select name="location" class="form-control" id="location" ng-model="censusForm.locationId">
+                            <option ng-repeat="loc in list" value="{{loc.id}}">{{loc.siteCode}} - {{loc.siteName}}
+                                <option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="surveyDate">Survey Date:</label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="surveyDate" name="surveyDate" 
+                                placeholder="{{today}}" date ng-model="censusForm.surveyDate" 
+                                uib-datepicker-popup="{{format}}" close-text="Close" 
+                                is-open="status.opened" datepicker-options="dateOptions">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
                         </div>
-                    </div>   
-                    <div class="form-group">
-                        <label class="control-label col-md-3" for="timeStart">Time Start:</label>
-                        <div class="col-md-3">
-                            <input type="time" class="form-control" id="timeStart" placeholder="Enter Start Time" ng-model="censusForm.timeStart">
-                        </div>
-                        <label class="control-label col-md-3" for="timeEnd">Time End:</label>
-                        <div class="col-md-3">
-                            <input type="time" class="form-control" id="timeEnd" placeholder="Enter End Time" ng-model="censusForm.timeEnd">
+                        <p class="form-control-static">
+                            {{censusForm.surveyDate | date:'fullDate' }}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="timeStart">Time Start:</label>
+                    <div class="col-md-3">
+                        <input type="time" class="form-control" id="timeStart" placeholder="Enter Start Time" ng-model="censusForm.timeStart">
+                    </div>
+                    <label class="control-label col-md-3" for="timeEnd">Time End:</label>
+                    <div class="col-md-3">
+                        <input type="time" class="form-control" id="timeEnd" placeholder="Enter End Time" ng-model="censusForm.timeEnd">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Temperature (F):</label>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control" name="temprature" ng-model="censusForm.temprature">
+                    </div>
+                    <label class="control-label col-md-3">Average Wind Speed:</label>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control" name="AvgWindSpeed" ng-model="censusForm.averageWindSpeed">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Tide:</label>
+                    <div class="col-md-9">
+                        <div class="checkbox">
+                            <label ng-repeat="tide in enums.tides">
+                                <input type="radio" name="tideInfo" ng-model="censusForm.tideInfoId" value="{{tide.Id}}"> {{ tide.description }} &nbsp;</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Site Activity:</label>
-                        <div class="col-md-9">
-                            <div class="checkbox">
-                                <label ng-repeat="siteTypeActivity in data.siteTypeActivityInfo"><input type="radio" name="siteTypeActivity" ng-model="censusForm.siteTypeActivityId" value="{{siteTypeActivity.Id}}"> {{ siteTypeActivity.Description }} &nbsp;</label>        
-                            </div>
-                        </div>    
-                    </div>  
-                    <!--<div class="form-group">
-                        <label class="control-label col-md-3">Site Type:</label>
-                        <div class="col-md-9">
-                            <div class="checkbox">
-                                <label ng-repeat="siteType in data.siteTypeInfo"><input type="radio" name="siteType" ng-model="censusForm.siteTypeId" value="{{siteType.Id}}"> {{ siteType.Description }} &nbsp;</label>        
-                            </div>
-                        </div>    
-                    </div>  -->
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Temprature (F):</label>
-                        <div class="col-md-3">      
-                            <input type="number" class="form-control" name="temprature" ng-model="censusForm.temprature" >
-                        </div>    
-                        <label class="control-label col-md-3">Average Wind Speed:</label>
-                        <div class="col-md-3">      
-                            <input type="number" class="form-control" name="AvgWindSpeed" ng-model="censusForm.averageWindSpeed" >
-                        </div>    
-                    </div>  
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Tides:</label>
-                        <div class="col-md-9">      
-                            <div class="checkbox">
-                                <label ng-repeat="tide in data.tideInfo"><input type="radio" name="tideInfo" ng-model="censusForm.tideInfoId" value="{{tide.Id}}"> {{ tide.Description }} &nbsp;</label>        
-                            </div>
-                        </div>    
-                    </div>  
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Weather:</label>
-                        <div class="col-md-9">
-                            <div class="checkbox">
-                                <label ng-repeat="weather in data.weatherInfo"><input type="radio" name="weatherInfo" ng-model="censusForm.weatherInfoId" value="{{weather.Id}}"> {{ weather.Description }} &nbsp;</label>      
-                            </div>
-                        </div>    
-                    </div> 
-                    <div class="form-group">
-                        <label class="control-label col-md-3" for="observers">Observer(s):</label>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control" id="observers" placeholder="Enter Observer(s) Name(s)" ng-model="censusForm.observers">
-                        </div>    
-                    </div> 
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Survey Vantage Point:</label>
-                        <div class="col-md-9">
-                            <div class="checkbox">
-                                <label ng-repeat="vantagePoint in data.vantagePointInfo"><input type="radio" name="vantagePointInfo" ng-model="censusForm.vantagePointInfoId" value="{{vantagePoint.Id}}"> {{vantagePoint.Description}} &nbsp; </label>
-                            </div>
-                        </div>    
-                    </div> 
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Survey Access Point:</label>
-                        <div class="col-md-9">
-                            <div class="checkbox">
-                                <label ng-repeat="accessPoint in data.accessPointInfo"><input type="radio" name="accessPointInfo" ng-model="censusForm.accessPointInfoId" value="{{accessPoint.Id}}"> {{accessPoint.Description}} &nbsp;</label>       
-                            </div>
-                        </div>    
-                    </div>       
-                </div>    
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Water Height:</label>
+                    <div class="col-md-9">
+                        <div class="checkbox">
+                            <label ng-repeat="waterHeight in enums.waterHeights">
+                                <input type="radio" name="waterHeight" ng-model="censusForm.waterHeight" value="{{waterHeight.Id}}"> {{ waterHeight.description }} &nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Weather:</label>
+                    <div class="col-md-9">
+                        <div class="checkbox">
+                            <label ng-repeat="weather in enums.weather">
+                                <input type="radio" name="weatherInfo" ng-model="censusForm.weatherInfoId" value="{{weather.Id}}"> {{ weather.description }} &nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="observers">Observer(s):</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" id="observers" placeholder="Enter Observer(s) Name(s)" ng-model="censusForm.observers">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Survey Vantage Point:</label>
+                    <div class="col-md-9">
+                        <div class="checkbox">
+                            <label ng-repeat="vantagePoint in enums.vantagePoints">
+                                <input type="radio" name="vantagePointInfo" ng-model="censusForm.vantagePointInfoId" value="{{vantagePoint.Id}}"> {{vantagePoint.description}} &nbsp; </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Survey Access Point:</label>
+                    <div class="col-md-9">
+                        <div class="checkbox">
+                            <label ng-repeat="accessPoint in enums.accessPoints">
+                                <input type="radio" name="accessPointInfo" ng-model="censusForm.accessPointInfoId" value="{{accessPoint.Id}}"> {{accessPoint.description}} &nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div ng-include="'/app/views/censusdata/bottomBar.html'"></div>
-        </div>  
+        </div>
     </form>
 </div>
