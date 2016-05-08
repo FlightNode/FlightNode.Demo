@@ -49,3 +49,9 @@ select.form-inline-small {
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+
+
+select.form-control {
+  font-size: 0.8em;
+  padding: 3px;
+}

@@ -28,6 +28,7 @@ flnd.censusDataCreate = {
                             var currentStep = censusFormService.censusForm.step;
                             var toMoveNext = censusFormService.censusForm.saveAndMoveNext;
                             var saveForLater = censusFormService.censusForm.saveForLater;
+
                             //Load the response data from the API back into scope.
                             $scope.censusForm = response.data;
                             $scope.censusForm.PutUrl = config.waterbirdForagingSurvey + response.data.surveyIdentifier;
@@ -49,7 +50,8 @@ flnd.censusDataCreate = {
                     });
             }
             else { //Subsequent updates
-                var saveForLater = censusFormService.censusForm.saveForLater;
+                // var saveForLater = censusFormService.censusForm.saveForLater;
+                // 
                 var toFinish = censusFormService.censusForm.saveAndFinish;
                 if(toFinish){
                     censusFormService.censusForm.step = 4;
@@ -97,8 +99,8 @@ flnd.censusDataCreate = {
  */
 angular.module('flightNodeApp')
     .controller('CensusDataCreateController', 
-    ['$scope', 'authService', 'config', 'messenger', 'censusFormService','$filter','$location', '$log',
-    function ($scope, authService, config, messenger, censusFormService, $filter, $location, $log) {
+    ['$scope', 'authService', 'config', 'messenger', 'censusFormService','$filter','$location', 'datePickerService',
+    function ($scope, authService, config, messenger, censusFormService, $filter, $location, datePickerService) {
 		$scope.loading = true;
         $scope.saveForLater=false;
         $scope.data = {};
@@ -106,17 +108,10 @@ angular.module('flightNodeApp')
         flnd.censusDataCreate.retrieveBirds(config, $scope, messenger, authService);
         flnd.locationList.retrieveRecords(config, $scope, messenger, authService);
         
-        //Lookup data coming from hard coded arrays.
-        $scope.data.tideInfo = censusFormService.tideInfo;         
-        $scope.data.weatherInfo = censusFormService.weatherInfo;
-        $scope.data.vantagePointInfo = censusFormService.vantagePointInfo;
-        $scope.data.accessPointInfo = censusFormService.accessPointInfo;
-        $scope.data.siteTypeInfo = censusFormService.siteTypeInfo;
-        $scope.data.siteTypeActivityInfo = censusFormService.siteTypeActivityInfo;
-        $scope.data.feedingRateInfo = censusFormService.feedingRateInfo;
-        $scope.data.habitatInfo = censusFormService.habitatInfo;
-        $scope.data.behaviorTypeInfo = censusFormService.behaviorTypeInfo;
-        $scope.data.disturbanceTypeInfo = censusFormService.disturbanceTypeInfo;
+
+        $scope.enums = censusFormService.enums;
+        
+        datePickerService.configureDateField($scope, 'censusForm', 'surveyDate');
         
         //Method to set the birdSpeciesId from the UI.
         $scope.setBirdId = function(index, birdSpeciesId){

@@ -24,7 +24,8 @@ angular
     'ui.grid.selection',
     'censusFormService',
     'uiSwitch',
-    'surveyTypeService'
+    'surveyTypeService',
+    'datePickerService'
   ])
   .config(function ($routeProvider) {
     $routeProvider

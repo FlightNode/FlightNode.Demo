@@ -33,20 +33,20 @@
                                         <td>
                                             <input type="number" class="form-control" ng-model="censusForm.observations[i].juvenile" placeholder="No. of Juvenile"></td>
                                         <td>
-                                            <select name="primaryActivitySelect"  class="form-control" id="secondaryActivitySelect" ng-model="censusForm.observations[i].primaryActivityId">
-                                                <option ng-repeat="behaviorType in data.behaviorTypeInfo" value="{{behaviorType.Id}}">{{behaviorType.Description}}</option>
+                                            <select name="primaryActivitySelect" class="form-control" id="secondaryActivitySelect" ng-model="censusForm.observations[i].primaryActivityId">
+                                                <option ng-repeat="behaviorType in enums.activityTypes" value="{{behaviorType.Id}}">{{behaviorType.description}}</option>
                                             </select>
                                         </td>
                                         <td>
                                             <select name="secondaryActivitySelect" class="form-control" id="secondaryActivitySelect" ng-model="censusForm.observations[i].secondaryActivityId">
-                                                <option ng-repeat="behaviorType in data.behaviorTypeInfo" value="{{behaviorType.Id}}">{{behaviorType.Description}}</option>
+                                                <option ng-repeat="behaviorType in enums.activityTypes" value="{{behaviorType.Id}}">{{behaviorType.description}}</option>
                                             </select>
                                         </td>
                                         <td><select name="habitatInfo" id="habitatInfo" class="form-control" ng-model="censusForm.observations[i].habitatId">
-                                            <option ng-repeat="habitat in data.habitatInfo" value="{{habitat.Id}}">{{habitat.Description}}</option>
+                                            <option ng-repeat="habitat in enums.habitatTypes" value="{{habitat.Id}}">{{habitat.description}}</option>
                                         </select></td>
                                         <td><select name="feedingSuccess" id="feedingSuccess" class="form-control" ng-model="censusForm.observations[i].feedingId">
-                                        <option ng-repeat="feed in data.feedingRateInfo" value="{{feed.Id}}">{{feed.Description}}</option>                  
+                                        <option ng-repeat="feed in enums.feedingSuccessRates" value="{{feed.Id}}">{{feed.description}}</option>                  
                                         </select></td>
                                     </tr>
                                 </tbody>
