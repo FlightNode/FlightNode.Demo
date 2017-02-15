@@ -1,25 +1,17 @@
-<div class="modal-header">
-    <h2>Create Workday Log</h2>
-    <p><span class="text-danger">*</span> indicates a required field.</p>
-</div>
-<form ng-submit="submit()" name="workdayForm" class="form-horizontal">
-    <div class="modal-body">
-        <alert>
-        </alert>
-        <div class="form-group">
-            <label for="workDate" class="col-sm-3 control-label">Date <span class="text-danger">*</span></label>
-            <div class="col-sm-9" ng-class="{'has-error': workdayForm.workDate.$error.required || workdayForm.workDate.$error.date}">
-                <div class="input-group">
-                    <input type="text" name="workDate" class="form-control" uib-datepicker-popup="{{format}}"
-                    ng-model="workday.workDate" is-open="status.opened"
-                    datepicker-options="dateOptions" ng-required="true" close-text="Close" placeholder="{{today}}" date />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
+<alert></alert>
+<loading></loading>
+<div class="row">
+    <div class="modal-header">
+        <h2>Log an Activity</h2>
+        <p><span class="text-danger">*</span> indicates a required field.</p>
+    </div>
+    <form name="workdayForm" class="form-horizontal">
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="workDate" class="col-sm-3 control-label">Date <span class="text-danger">*</span></label>
+                <div class="col-sm-4" ng-class="{'has-error': workdayForm.workDate.$error.required || workdayForm.workDate.$error.date}">
+                    <input kendo-date-picker ng-model="workday.workDate" k-ng-model="workDateObject" style="width: 100%" ng-required="true" id="startDate" name="workDate" />
                 </div>
-                <p class="form-control-static">
-                    {{workday.workDate | date:'fullDate' }}
-                </p>
             </div>
             <div role="alert" class="col-sm-9 col-sm-offset-3">
                 <span class="error" ng-show="workdayForm.workDate.$error.date">Invalid date</span>

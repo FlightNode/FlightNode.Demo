@@ -1,18 +1,20 @@
-<div class="modal-header">
-    <h2>Create Workday Log for Another Person</h2>
-    <p><span class="text-danger">*</span> indicates a required field.</p>
-</div>
-<form ng-submit="submit()" name="workdayForm" class="form-horizontal">
-    <div class="modal-body">
-        <alert>
-        </alert>
-        <div class="form-group">
-            <label for="userId" class="col-sm-3 control-label">Person <span class="text-danger">*</span></label>
-            <div class="col-sm-9" ng-class="{'has-error': workdayForm.userId.$error.required}">
-                <select class="form-control" required name="userId"
-                    ng-model="workday.userId"
-                    ng-options="item.id as item.value for item in data.users">
-                </select>
+<alert></alert>
+<loading></loading>
+<div class="row">
+    <div class="modal-header">
+        <h2>Log an Activity for Another Person</h2>
+        <p><span class="text-danger">*</span> indicates a required field.</p>
+    </div>
+    <form ng-submit="submit()" name="workdayForm" class="form-horizontal">
+        <div class="modal-body">
+            <alert>
+            </alert>
+            <div class="form-group">
+                <label for="userId" class="col-sm-3 control-label">Person <span class="text-danger">*</span></label>
+                <div class="col-sm-9" ng-class="{'has-error': workdayForm.userId.$error.required}">
+                    <select class="form-control" ng-required="true" name="userId" ng-model="workday.userId" ng-options="item.id as item.value for item in data.users">
+                    </select>
+                </div>
             </div>
             <div role="alert" class="col-sm-9 col-sm-offset-3">
                 <span class="error" ng-show="workdayForm.userId.$error.required">Required</span>

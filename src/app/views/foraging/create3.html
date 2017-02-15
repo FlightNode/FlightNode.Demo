@@ -1,0 +1,81 @@
+<alert></alert>
+<loading></loading>
+<div ng-include="'/app/views/foraging/progressBar.html'"></div>
+<div class="row" ng-show="invalid">
+    <div class="col-sm-8 col-sm-offset-2">
+        <div class="alert alert-danger" role="alert">
+            One or more observations is incomplete (pink row / species marked with **).
+        </div>
+    </div>
+</div>
+<div class="row">
+    <form class="form-horizontal survey-form" role="form" name="observationForm">
+        <div class="panel panel-info">
+            <div class="panel-heading"><span class="icon-info"></span>&nbsp; Instructions</div>
+            <div class="panel-body">
+                <p>If a quantity is entered for either juveniles or adults on any species, then the additional fields must be filled out for that species. To remove a species observation, simply change the number of both juveniles and adults to zero.</p>
+            </div>
+        </div>
+        <div class="row header-row">
+            <div class="col-sm-2">Species</div>
+            <div class="col-sm-1">No. of Adults</div>
+            <div class="col-sm-1">No. of Juveniles</div>
+            <div class="col-sm-2">Primary Activity</div>
+            <div class="col-sm-2">Secondary Activity</div>
+            <div class="col-sm-2">Location / Habitat Type</div>
+            <div class="col-sm-2">% Feeding Success Rate</div>
+        </div>
+        <div ng-class="{ 'row odd-row': $odd, 'row even-row': $even, 'last-row': $last }" ng-repeat="bird in birdSpeciesList | orderBy: 'commonName' track by $index">
+            <div class="col-sm-2" ng-class="{ 'bg-danger': bird.invalid }">
+                <b ng-bind="bird.commonName"></b>
+                <span ng-show="bird.invalid" class="text-warning">**</span>
+            </div>
+            <div class="visible-sm-12 visible-xs-12 hidden-md hidden-lg small-label">Number of Adults</div>
+            <div class="col-sm-1" ng-class="{ 'bg-danger': bird.invalid }">
+                <input type="number" min="0" name="adults" class="form-control" ng-model="bird.adults" placeholder="Adults" ng-change="validateObservation(bird.id)">
+            </div>
+            <div class="visible-sm-12 visible-xs-12 hidden-md hidden-lg small-label">Number of Juveniles</div>
+            <div class="col-sm-1" ng-class="{ 'bg-danger': bird.invalid }">
+                <input type="number" name="juveniles" class="form-control" ng-model="bird.juveniles" placeholder="Juveniles" ng-change="validateObservation(bird.id)">
+            </div>
+            <div class="visible-sm-12 visible-xs-12 hidden-md hidden-lg small-label">Primary Activity</div>
+            <div class="col-sm-2" ng-class="{ 'bg-danger': bird.invalid }">
+                <select id="primaryActivitySelect" name="primaryActivitySelect" class="form-control" ng-model="bird.primaryActivityId" ng-options="item.id as item.description for item in enums.behaviorTypeInfo" ng-change="validateObservation(bird.id)">
+                </select>
+            </div>
+            <div class="visible-sm-12 visible-xs-12 hidden-md hidden-lg small-label">Secondary Activity</div>
+            <div class="col-sm-2" ng-class="{ 'bg-danger': bird.invalid }">
+                <select id="secondaryActivitySelect" name="secondaryActivitySelect" class="form-control" ng-model="bird.secondaryActivityId" ng-options="item.id as item.description for item in enums.behaviorTypeInfo" ng-change="validateObservation(bird.id)">
+                </select>
+            </div>
+            <div class="visible-sm-12 visible-xs-12 hidden-md hidden-lg small-label">Location / Habitat Type</div>
+            <div class="col-sm-2" ng-class="{ 'bg-danger': bird.invalid }">
+                <select id="habitatInfo" name="habitatInfo" class="form-control" ng-model="bird.habitatId" ng-options="item.id as item.description for item in enums.habitatInfo" ng-change="validateObservation(bird.id)">
+                </select>
+            </div>
+            <div class="visible-sm-12 visible-xs-12 hidden-md hidden-lg small-label">% Feeding Success Rate</div>
+            <div class="col-sm-2" ng-class="{ 'bg-danger': bird.invalid }">
+                <select id="feedingSuccess" name="feedingSuccess" class="form-control" ng-model="bird.feedingId" ng-options="item.id as item.description for item in enums.feedingRateInfo" ng-change="validateObservation(bird.id)">
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 1em; margin-bottom: 1em;">
+            <div class="form-group">
+                <label class="control-label col-sm-2">Add species</label>
+                <div class="col-sm-3">
+                    <input type="text" id="add-species" name="add-species" class="form-control" ng-model="speciesToAdd" uib-typeahead="bird.commonName for bird in allBirds | filter:$viewValue | limitTo:8">
+                </div>
+                <div class="col-sm-2">
+                    <input type="button" class="btn btn-default" value="Add" name="add-species" id="add-species" ng-click="addSpecies()">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 1em; margin-bottom: 1em;">
+            <label class="control-label col-sm-2" for="surveyComments">Comments</label>
+            <div class="col-sm-9">
+                <textarea type="text" class="form-control" rows="5" id="surveyComments" placeholder="Enter Comments" ng-model="foragingSurvey.surveyComments"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<div ng-include="'/app/views/foraging/bottomBar.html'"></div>
