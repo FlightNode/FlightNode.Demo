@@ -2,6 +2,7 @@
 'use strict';
 
 var flnd = {}; // jshint ignore:line
+var site = 'FlightNode';
 
 angular
   .module('flightNodeApp', [
@@ -22,159 +23,270 @@ angular
     'ui.bootstrap.modal',
     'ui.bootstrap.timepicker',
     'ui.grid.selection',
-    'censusFormService',
-    'uiSwitch',
-    'surveyTypeService',
-    'datePickerService'
+    'ui.bootstrap.typeahead',
+    'ngMap',
+    'kendo.directives'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'app/views/main.html',
         controller: 'MainController',
-        title: 'FlightNode - Home'
+        title: site + ' - Home'
       })
       .when('/login', {
         templateUrl: 'app/views/login.html',
         controller: 'LoginController',
-        title: 'FlightNode - Login'
+        title: site + ' - Login'
       })
       .when('/users', {
         templateUrl: 'app/views/users/list.html',
         controller: 'UserListController',
-        title: 'FlightNode - Users - List'
+        title: site + ' - Users - List'
       })
       .when('/users/pending', {
         templateUrl: 'app/views/users/pending.html',
         controller: 'UserPendingController',
-        title: 'FlightNode - Pending Users'
+        title: site + ' - Pending Users'
       })
       .when('/users/new', {
         templateUrl: 'app/views/users/create.html',
         controller: 'UserCreateController',
-        title: 'FlightNode - Users - New'
+        title: site + ' - Users - New'
       })
       .when('/users/register', {
         templateUrl: 'app/views/users/register.html',
         controller: 'UserRegisterController',
-        title: 'FlightNode - Register New Account'
+        title: site + ' - Register New Account'
       })
       .when('/users/profile', {
         templateUrl: 'app/views/users/profile.html',
         controller: 'UserProfileController',
-        title: 'FlightNode - My Profile'
+        title: site + ' - My Profile'
+      })
+      .when('/users/forgot', {
+        templateUrl: 'app/views/users/forgot.html',
+        controller: 'UserForgotPasswordController',
+        title: site + ' - Forgotten Password'
+      })
+      .when('/users/changepassword', {
+        templateUrl: 'app/views/users/changePassword.html',
+        controller: 'UserChangePasswordController',
+        title: site + ' - Change Password'
       })
       .when('/users/:userId', {
         templateUrl: 'app/views/users/edit.html',
         controller: 'UserEditController',
-        title: 'FlightNode - Users - Edit'
+        title: site + ' - Users - Edit'
       })
-      .when('/workdays/', {
+      .when('/workdays/all', {
         templateUrl: 'app/views/workdays/list.html',
         controller: 'WorkdayListController',
-        title: 'FlightNode - Work Day - List'
+        title: site + ' - Work Day - List'
       })
       .when('/workdays/new', {
         templateUrl: 'app/views/workdays/create.html',
         controller: 'WorkdayCreateController',
-        title: 'FlightNode - Work Day - New Log'
+        title: site + ' - Work Day - New Log'
       })
       .when('/workdays/newforuser', {
         templateUrl: 'app/views/workdays/createForUser.html',
         controller: 'WorkdayCreateForUserController',
-        title: 'FlightNode - Work Day - New Log for Another Person'
+        title: site + ' - Work Day - New Log for Another Person'
+      })
+      .when('/workdays/', {
+        templateUrl: 'app/views/workdays/mylist.html',
+        controller: 'WorkdayMyListController',
+        title: site + ' - User\'s Work Days'
       })
       .when('/workdays/mylist', {
         templateUrl: 'app/views/workdays/mylist.html',
         controller: 'WorkdayMyListController',
-        title: 'FlightNode - User\'s Work Days'
+        title: site + ' - User\'s Work Days'
       })
       .when('/workdays/:id', {
         templateUrl: 'app/views/workdays/edit.html',
         controller: 'WorkdayEditController',
-        title: 'FlightNode - Work Day - Edit'
+        title: site + ' - Work Day - Edit'
+      })
+      .when('/workdays/edit/:id', {
+        templateUrl: 'app/views/workdays/edit.html',
+        controller: 'WorkdayEditController',
+        title: site + ' - Work Day - Edit'
       })
       .when('/worktypes', {
         templateUrl: 'app/views/worktypes/list.html',
         controller: 'WorktypeListController',
-        title: 'FlightNode - Work Types - List'
+        title: site + ' - Work Types - List'
       })
       .when('/worktypes/new', {
         templateUrl: 'app/views/worktypes/create.html',
         controller: 'WorktypeCreateController',
-        title: 'FlightNode - Work Types - New'
+        title: site + ' - Work Types - New'
       })
       .when('/worktypes/:id', {
         templateUrl: 'app/views/worktypes/edit.html',
         controller: 'WorktypeEditController',
-        title: 'FlightNode - FlightNode - Work Types - Edit'
+        title: site + ' - FlightNode - Work Types - Edit'
       })
       .when('/locations', {
         templateUrl: 'app/views/locations/list.html',
         controller: 'LocationListController',
-        title: 'FlightNode - Locations - List'
+        title: site + ' - Locations - List'
       })
       .when('/locations/new', {
         templateUrl: 'app/views/locations/create.html',
         controller: 'LocationCreateController',
-        title: 'FlightNode - Locations - New'
+        title: site + ' - Locations - New'
       })
       .when('/locations/:id', {
         templateUrl: 'app/views/locations/edit.html',
         controller: 'LocationEditController',
-        title: 'FlightNode - Locations - Edit'
+        title: site + ' - Locations - Edit'
       })
       .when('/species', {
         templateUrl: 'app/views/birdspecies/list.html',
         controller: 'BirdSpeciesListController',
-        title: 'FlightNode - Bird Species - List'
+        title: site + ' - Bird Species - List'
       })
       .when('/species/new', {
         templateUrl: 'app/views/birdspecies/create.html',
         controller: 'BirdSpeciesCreateController',
-        title: 'FlightNode - Bird Species - New'
+        title: site + ' - Bird Species - New'
       })
       .when('/species/:id', {
         templateUrl: 'app/views/birdspecies/edit.html',
         controller: 'BirdSpeciesEditController',
-        title: 'FlightNode - Bird Species - Edit'
+        title: site + ' - Bird Species - Edit'
       })
       .when('/logout', {
         templateUrl: 'app/views/main.html',
         controller: 'LogoutController'
       })
       .when('/foraging/', {
-        templateUrl: 'app/views/censusdata/create.html',
-        controller: 'CensusDataCreateController',
-        title: 'Waterbird Foraging Survey - New'
+        templateUrl: 'app/views/foraging/list.html',
+        controller: 'ForagingListController',
+        title: 'Manage My Waterbird Foraging Surveys'
       })
-      .when('/foraging/create', {
-        templateUrl: 'app/views/censusdata/create.html',
-        //TODO: Will think about should conroller be seperated out for each of these views.
-        controller: 'CensusDataCreateController',
-        title: 'Waterbird Foraging Survey - New'
+      .when('/foraging/step1/', {
+        templateUrl: 'app/views/foraging/create1.html',
+        controller: 'ForagingStep1Controller',
+        title: site + ' - Rookery Census - New',
+        step: 1
       })
-      .when('/foraging/create2', {
-        templateUrl: 'app/views/censusdata/create2.html',
-        //TODO: Will think about should conroller be seperated out for each of these views.
-        controller: 'CensusDataCreateController',
-        title: 'Waterbird Foraging Survey - New'
+      .when('/foraging/step1/:id', {
+        templateUrl: 'app/views/foraging/create1.html',
+        controller: 'ForagingStep1Controller',
+        title: site + ' - Rookery Census - New',
+        step: 1
       })
-      .when('/foraging/create3', {
-        templateUrl: 'app/views/censusdata/create3.html',
-        //TODO: Will think about should conroller be seperated out for each of these views.
-        controller: 'CensusDataCreateController',
-        title: 'Waterbird Foraging Survey - New'
+      .when('/foraging/step2/:id', {
+        templateUrl: 'app/views/foraging/create2.html',
+        controller: 'ForagingStep2Controller',
+        title: site + ' - Rookery Census - New',
+        step: 2
       })
-      .when('/foraging/create4', {
-        templateUrl: 'app/views/censusdata/create4.html',
-        //TODO: Will think about should conroller be seperated out for each of these views.
-        controller: 'CensusDataCreateController',
-        title: 'Waterbird Foraging Survey - Finished'
+      .when('/foraging/step3/:id', {
+        templateUrl: 'app/views/foraging/create3.html',
+        controller: 'ForagingStep3Controller',
+        title: site + ' - Rookery Census - New',
+        step: 3
+      })
+      .when('/foraging/step4/:id', {
+        templateUrl: 'app/views/foraging/create4.html',
+        controller: 'ForagingStep4Controller',
+        title: site + ' - Rookery Census - New',
+        step: 4
+      })
+      .when('/foraging/step5/:id', {
+        templateUrl: 'app/views/foraging/create5.html',
+        controller: 'ForagingStep5Controller',
+        title: site + ' - Rookery Census - New',
+        step: 5
+      })
+      .when('/foraging/complete', {
+        templateUrl: 'app/views/foraging/complete.html',
+        title: site + ' - Rookery Census - Completed'
+      })
+      .when('/data/foraging', {
+        templateUrl: 'app/views/foraging/manage.html',
+        controller: 'ForagingManageController',
+        title: site + ' - Manage Rookery Censuss'
+      })
+      .when('/data/rookery', {
+        templateUrl: 'app/views/rookery/manage.html',
+        controller: 'RookeryCensusManageController',
+        title: site + ' - Manage Rookery Censuses'
+      })
+      .when('/rookery/', {
+        templateUrl: 'app/views/rookery/list.html',
+        controller: 'RookeryListController',
+        title: 'Manage My Rookery Census Surveys'
+      })
+      .when('/rookery/step1/', {
+        templateUrl: 'app/views/rookery/create1.html',
+        controller: 'RookeryCensusStep1Controller',
+        title: site + ' - Rookery Census - New',
+        step: 1
+      })
+      .when('/rookery/step1/:id', {
+        templateUrl: 'app/views/rookery/create1.html',
+        controller: 'RookeryCensusStep1Controller',
+        title: site + ' - Rookery Census - New',
+        step: 1
+      })
+      .when('/rookery/step2/:id', {
+        templateUrl: 'app/views/rookery/create2.html',
+        controller: 'RookeryCensusStep2Controller',
+        title: site + ' - Rookery Census - New',
+        step: 2
+      })
+      .when('/rookery/step3/:id', {
+        templateUrl: 'app/views/rookery/create3.html',
+        controller: 'RookeryCensusStep3Controller',
+        title: site + ' - Rookery Census - New',
+        step: 3
+      })
+      .when('/rookery/step4/:id', {
+        templateUrl: 'app/views/rookery/create4.html',
+        controller: 'RookeryCensusStep4Controller',
+        title: site + ' - Rookery Census - New',
+        step: 4
+      })
+      .when('/rookery/step5/:id', {
+        templateUrl: 'app/views/rookery/create5.html',
+        controller: 'RookeryCensusStep5Controller',
+        title: site + ' - Rookery Census - New',
+        step: 5
+      })
+      .when('/rookery/complete', {
+        templateUrl: 'app/views/rookery/complete.html',
+        title: site + ' - Rookery Census - Completed'
+      })
+      .when('/violations', {
+        templateUrl: 'app/views/violations.html',
+        title:  site + ' - Reporting Violations'
+      })
+      .when('/faq', {
+        templateUrl: 'app/views/faq/index.html',
+        title: site + ' - Frequently Asked Questions'
+      })
+      .when('/contact', {
+        templateUrl: 'app/views/contact.html',
+        controller: 'ContactController',
+        title: site + ' - Contact Us'
+      })
+      .when('/data', {
+        templateUrl: 'app/views/data.html',
+        title: site + ' - Submit Survey Data'
+      })
+      .when('/data2', {
+        templateUrl: 'app/views/data2.html',
+        title: site + ' - Submit Survey Data'
       })
       .otherwise({
         templateUrl: 'app/views/404.html',
-        title: 'FlightNode - page not found'
+        title: site + ' - page not found'
       });
   })
   .run(function(authService, $rootScope, $route, $window, $log, navigationService) {
@@ -189,23 +301,6 @@ angular
 
     navigationService.buildNavigation();
 
-  })
-  .directive('loading', function () {
-    return {
-      restrict: 'E',
-      replace: true,
-      template: '<div class="loading"><img class="loadingImage" src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" width="64" height="64" /></div>',
-      link: function (scope, element) {
-        scope.$watch('loading', function (val) {
-          if (val) {
-            $(element).show();
-          }
-          else {
-            $(element).hide();
-          }
-        });
-      }
-    };
   })
   .directive('alert', [function () {
     return {

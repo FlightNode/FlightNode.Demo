@@ -3,12 +3,13 @@
 flnd.birdSpeciesCreate = {
     updateSurveyTypes: function(birdspecies) {
         // This hard-coding is nasty but useful due to time constraints
+        // TODO: Remove this hard-coding somehow
         birdspecies.surveyTypeNames = [];
         if (birdspecies.surveyTypeRookery) {
-            birdspecies.surveyTypeNames.push('TERN Rookery Survey');
+            birdspecies.surveyTypeNames.push('Rookery Survey');
         }
         if (birdspecies.surveyTypeForaging) {
-            birdspecies.surveyTypeNames.push('TERN Waterbird Foraging Survey');
+            birdspecies.surveyTypeNames.push('Waterbird Foraging Survey');
         }
     },
 
@@ -45,8 +46,7 @@ angular.module('flightNodeApp')
     .controller('BirdSpeciesCreateController', ['$scope', '$http', '$log', '$location', 'messenger', 'authService', 'config', '$uibModalInstance',
         function($scope, $http, $log, $location, messenger, authService, config, $uibModalInstance) {
 
-            if (!(authService.isAdministrator() ||
-                    authService.isCoordinator())) {
+            if (!authService.isAdministrator()) {
                 $log.warn('not authorized to access this path');
                 $location.path('/');
                 return;
